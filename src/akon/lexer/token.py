@@ -2,14 +2,19 @@ from enum import Enum, auto
 from dataclasses import dataclass
 
 class TokenType(Enum):
-    #Keyword types
+    #Keyword data typea
     INT = auto()
     FLOAT = auto()
     BOOL = auto()
     STRING = auto()
     
+    #Keywords var types
+    VAR = auto()
+    LET = auto()
+    
     #Keywords conditionals
     IF = auto()
+    ELSE = auto()
     
     #Signs
     PLUS = auto()

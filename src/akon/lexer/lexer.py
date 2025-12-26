@@ -4,17 +4,20 @@ from akon.diagnostic.akon_errors import LexerError, ErrorReporter
 
 class Lexer:
     keywords = {
-        "Int":TokenType.INT,
-        "Float":TokenType.FLOAT,
-        "String":TokenType.STRING,
-        "Bool":TokenType.BOOL,
+        "var":TokenType.VAR,
+        "let":TokenType.LET,
+        "int":TokenType.INT,
+        "float":TokenType.FLOAT,
+        "string":TokenType.STRING,
+        "bool":TokenType.BOOL,
         "True":TokenType.TRUE,
         "False":TokenType.FALSE,
         "if":TokenType.IF,
+        "else":TokenType.ELSE,
         "and":TokenType.AND,
         "or":TokenType.OR,
         "not":TokenType.NOT,
-        "None":TokenType.NONE,
+        "none":TokenType.NONE,
     }
     
     def __init__(self, code:str, reporter:ErrorReporter) -> None:

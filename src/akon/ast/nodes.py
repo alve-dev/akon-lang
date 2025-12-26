@@ -147,12 +147,22 @@ class DeclarationNode(Node):
         return f"<{__class__.__name__} type={self.type} name={self.name} value={self.value}>"
     
 class IfNode(Node):
-    def __init__(self, condition, statements) -> None:
+    def __init__(self, condition, statements, scope, else_node = NoneNode) -> None:
         self.condition = condition
         self.statements = statements
+        self.else_node = else_node
+        self.scope = scope
         
     def __repr__(self):
         return f"<{__class__.__name__} condition={self.condition}, statements={self.condition}"
+
+class ElseNode(Node):
+    def __init__(self, statements, scope) -> None:
+        self.statements = statements
+        self.scope = scope
+        
+    def __repr__(self):
+        return f"<{__class__.__name__} statements={self.statements}"
 
 class CallNode(Node):
     def __init__(self, callee, args):
@@ -163,8 +173,9 @@ class CallNode(Node):
         return f"<{__class__.__name__} calle={self.calle} args={self.args}"
 
 class ProgramNode(Node):
-    def __init__(self, statements: list[Node]) -> None:
+    def __init__(self, statements: list[Node], scope) -> None:
         self.statements = statements
+        self.scope = scope
         
     def __repr__(self):
         return f"<{__class__.__name__} statements={self.statements}>"
