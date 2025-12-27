@@ -55,41 +55,48 @@ Akon is designed for both **systems-level performance** and **data science agili
 - Structured and readable syntax inspired by C
 
 ---
+## Variable Types
+
+- `var`
+  It is a mutable variable, meaning it can change in the code
+
+- `let`
+  It is an immutable variable, meaning it can only have one value given at the beginning, that is, a constant
 
 ## Data Types
 
 ### High-Level Core Types
 
-- `Int`  
+- `int`  
   Signed 64-bit integer (default integer type)
 
-- `BigInt`  
+- `bigint`  
   Arbitrary-precision signed integer
 
-- `Float`  
+- `float`  
   Signed 64-bit floating-point number
 
-- `BigFloat`  
+- `bigfloat`  
   Arbitrary-precision floating-point number
 
-- `Decimal`  
+- `decimal`  
   Arbitrary-precision decimal type (financial/scientific use)
 
-- `String`  
+- `string`  
   UTF-8 string type
 
-- `Bool`  
+- `bool`  
   Boolean (`True` / `False`)
 
-- `Array<T>`  
+- `array<T>`  
   Contiguous memory array with explicit element type
 
-- `Dict<K, V>`  
+- `dict<K, V>`  
   Dictionary similar to Python  
   - Keys must be static and homogeneous  
   - Values may be heterogeneous
 
-- `Tensor`  
+- `tensor`  
   Planned type for Machine Learning (not finalized)
 
 ---
@@ -127,26 +134,26 @@ Akon is designed for both **systems-level performance** and **data science agili
 ### Variable Declarations
 
 ```akon
-Int number = 10;
-Float number_float = 10.5;
+var int number = 10;
+var float number_float = 10.5;
 
-BigInt big_number = 10**500;
-BigFloat big_number_float = 10.5**500;
+let bigint big_number = 10**500;
+let bigfloat big_number_float = 10.5**500;
 
 // Prefer basic int and float when possible
 
-String language_name = "Akon";
+let string language_name = "Akon";
 
-Array<String> languages = ["Akon", "C", "Python", "C++", "Rust"];
+let array<string> languages = ["Akon", "C", "Python", "C++", "Rust"];  //This would be equivalent to a Python tuple, that is, an immutable contiguous memory array (hence let) of strings called languages
 
-Dict<String, String> developers = {
+let dict<string, string> developers = {
     "Guido van Rossum": "Python",
     "Bjarne Stroustrup": "C++",
     "Graydon Hoare": "Rust",
     "Me": "Akon",
-};
+}; // Just like above, since it has `let` it cannot change, it's an immutable dict, which has keys of strings and values ​​of strings, and is called developers
 
-Bool in_development = True;
+var bool in_development = True;
 ```
 ---
 
@@ -155,7 +162,7 @@ Bool in_development = True;
 ```akon
 // 'dynamic' is a keyword, not a type
 
-dynamic variable = "Hello, World";
+var dynamic variable = "Hello, World"; //Note: `var` is mutable, `dynamic` can be of any type; if it were `let`, `dynamic` wouldn't make sense unless it's in prototyping.
 variable = 2025;
 variable = True;
 ```
@@ -163,14 +170,14 @@ variable = True;
 Dynamic typing is allowed but discouraged unless necessary. It is useful for rapid prototyping but should be used responsibly.
 
 ```akon
-Array<dynamic> list = [1, 2, 3, "hello", "Alex", [1.5, 6.3]];
+var array<dynamic> list = [1, 2, 3, "hello", "Alex", [1.5, 6.3]]; //This is equivalent to Python's `list`, an array with contiguous memory, mutable, and with dynamic values ​​inside, meaning more than one type.
 
-Dict<String, dynamic> person = {
+var dict<string, dynamic> person = {
     "name":"Jonh Doe",
     "dni":"123456789",
     "children": 2,
     "married": True,
-};
+}; //Similarly, a mutable dictionary with a string key, dynamic values ​​(more than one type), and it's 'var' meaning it can change, or in other words, mutable like people; that's why it's a person dictionary.
 ```
 > Dictionary keys must be static and homogeneous (e.g., all strings or all integers). Values may be 
 > dynamic.
@@ -182,9 +189,9 @@ Dict<String, dynamic> person = {
 ### Hello World(Block Syntax)
 
 ```akon
-func main(void) -> Int
+func main(void) -> int
 {
-    print("Hello World");
+    write("Hello World");
     return 0;
 }
 ```
@@ -193,25 +200,25 @@ func main(void) -> Int
 ### Conditionals(Age Checker)
 
 ```akon
-func main(void) -> Int
+func main(void) -> int
 {
-    Int age = read_Int("Enter your age: ");
+    let int age = read_Int("Enter your age: ");
     
     if (age < 0)
     {
-        print("Still in your mother's womb");
+        write("Still in your mother's womb");
     }
     elif (age >= 200)
     {
-        print("Inmortal vampire");
+        write("Inmortal vampire");
     }
     elif (age >= 18)
     {
-        print("Adult");    
+        write("Adult");    
     }
     else
     {
-        print("Minor");
+        write("Minor");
     }
 
     return 0;
@@ -223,12 +230,13 @@ func main(void) -> Int
 ```akon
 func main(void) -> Int
 {
-    Int money = 1;
+    var int money = 1;
+    var string answer;
 
-    while (True)
+    loop //"loop" is a completely infinite loop, equivalent to "while true" or "while (true)".
     {
         print("You have", money, "dollars. Do you want to double it?");
-        String answer = readString("[Y/N]: ", limit=1).to_lower();
+        answer = readString("[Y/N]: ", limit=1).to_lower();
 
         if (answer == 'y')
         {
@@ -253,7 +261,7 @@ func main(void) -> Int
 ```akon
 func fact(int n) -> Int
 {
-    Int product = 1;
+    var int product = 1;
     
     for (i in range(1, n + 1))
     {
@@ -272,12 +280,12 @@ Akon supports both block-based `{}` syntax and identation-based syntax
 
 ### Hello World(Identation)
 ```akon
-func main(void) -> Int:
+func main(void) -> int:
     print("Hello World")
     return 0
 ```
 ### Rules
-- A `:` afther `if`, `func`, `for`, `while`, etc. Enables identation-based blocks
+- A `:` afther `if`, `func`, `for`, `while`, `loop`, etc. Enables identation-based blocks
 - Identation without `:`**-> error**
 - Using `:` together with `{}`**-> error**
 - No `:` **->** `{}` is required
@@ -285,7 +293,7 @@ func main(void) -> Int:
 
 ## Standard Library(Planned)
 `stdio`
-- `print()`
+- `write()`
     Standard output with automatic newline
 - `readString()`
     Read a string from input
