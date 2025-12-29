@@ -38,8 +38,8 @@ def main():
         root_node = parser.parse_program()
         
         #AST print
-        print("===ABSTRACT SINTACTIC TREE===")
-        print_ast(root_node)
+        #print("===ABSTRACT SINTACTIC TREE===")
+        #print_ast(root_node)
         
         #Interpreter
         interpreter = Interpreter(root_node, reporter)

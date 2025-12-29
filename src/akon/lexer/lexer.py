@@ -122,7 +122,7 @@ class Lexer:
                         self.tokens_array.append(Token(TokenType.DOUBLE_STAR, "**", self.column, self.line))
                         
                 else:
-                    if self.peek == '=':
+                    if self.peek() == '=':
                         self.tokens_array.append(Token(TokenType.STAR_ASSIGN, "*=", self.column, self.line))
                         self.advance()
                     else:
